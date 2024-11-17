@@ -85,3 +85,5 @@ int main(void) {
     std::cout << "Solution\n" << solution << "\n";
 }
 ```
+## Acknowledgments
+Algorithms referenced from "Heath, M. T. (2018). Scientific computing : an introductory survey (Second edition, SIAM edition.). Society for Industrial and Applied Mathematics (SIAM, 3600 Market Street, Floor 6, Philadelphia, PA 19104)"
