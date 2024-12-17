@@ -6,16 +6,27 @@
 #include "eigen.h"
 #include "nonlinear.h"
 
-#define PI 3.14159265
-
-float my_func(float x) {
-    return pow(x, 2) - (4 * sin(x));
-}
-
+float f(float x) {
+    return (4 / (1 + pow(x, 2)));
+} 
 
 int main(void) {
-    auto interval = NONLIN::interval_bisection(1, 3, my_func, 0.1);
-    std::cout << interval.first << " " << interval.second << "\n";
-    auto sol = NONLIN::secant_method(1, 3, my_func, 0.0001);
-    std::cout << "Secant method solution: " << sol << "\n";
+    auto A = Matrix(4, 4, {
+        2.9766, 0.3945, 0.4198, 1.1159,
+        0.3945, 2.7328, -0.3097, 0.1129,
+        0.4198, -0.3097, 2.5675, 0.6079,
+        1.1159, 0.1129, 0.6079, 1.7231
+    });
+
+    // auto result = EIG::qr_iteration(A);
+    // std::cout << result.first << "\n";
+    // std::cout << "----------------\n";
+    // std::cout << result.second << "\n";
+    // std::cout << "----------------\n";
+
+    // auto eigenvec = A * result.second.slice(A.get_num_rows(), 1, 0, 1);
+    // std::cout << eigenvec << "\n";
+
+    auto integral = NONLIN::midpoint_integral(0, 1, f, 0.001);
+    std::cout << "Integral estimate: " << integral << "\n";   
 }

@@ -22,3 +22,15 @@ float NONLIN::secant_method(float a, float b, std::function<float(float)> f, flo
     }
     return b;
 }
+
+float NONLIN::midpoint_integral(float a, float b, std::function<float(float)> f, float h) {
+    int k = (b - a) / h;
+    float I = 0;
+
+    for(int i = 1; i <= k; ++i) {
+        float m = (h / 2) * (f(a + i * h) + f(a + (i - 1) * h));
+        I += m;
+    }
+
+    return I;
+}

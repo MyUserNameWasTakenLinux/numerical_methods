@@ -26,3 +26,17 @@ std::pair<float, Matrix> EIG::normalized_inverse_iteration(const Matrix &A) {
 
     return std::make_pair(matrix_inf_norm(y), x);
 }
+
+std::pair<Matrix, Matrix> EIG::qr_iteration(const Matrix &A) {
+    auto A_k = A;
+    auto Q_hat = Matrix::identity(A.get_num_rows());
+
+    for(auto i = 0; i != 10; ++i) {
+        auto qr_fact = LLS::householder_qr_factorization(A_k);
+        auto Q = LLS::get_q_from_transforms(qr_fact.first);
+        A_k = qr_fact.second.slice(Q.get_num_rows(), Q.get_num_columns(), 0, 0) * Q;
+        Q_hat = Q_hat * Q;
+    }
+
+    return std::make_pair(A_k, Q_hat);    
+}

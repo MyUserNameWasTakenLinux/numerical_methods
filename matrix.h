@@ -283,7 +283,7 @@ public:
         row_start (int): row index to start the slice
         col_start (int): column index to start the slice
     
-    Returns: identity
+    Returns: matrix slice
     */
     Matrix slice(int n, int m, int row_start, int col_start);
 

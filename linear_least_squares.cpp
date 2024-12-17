@@ -43,3 +43,20 @@ std::pair<std::vector<Matrix>, Matrix> LLS::householder_qr_factorization(Matrix 
 
     return std::make_pair(householder_transforms, A);
 }
+
+Matrix LLS::get_q_from_transforms(std::vector<Matrix> h_transforms) {
+    auto I = Matrix::identity(h_transforms[0].get_num_rows());
+    
+    // Iterate over columns
+    for(auto i = 0; i != h_transforms.size(); ++i) {
+        Matrix result = I.slice(h_transforms[0].get_num_rows(), 1, 0, i);
+        for(auto v = h_transforms.rbegin(); v != h_transforms.rend(); ++v) {
+            result = householder_transform(*v, result);
+        }
+        for(auto j = 0; j != h_transforms.size(); ++j) {
+            I[j][i] = result[j][0];
+        }
+    }
+
+    return I.slice(h_transforms.size(), h_transforms.size(), 0, 0);
+}
